@@ -33,6 +33,7 @@ usage(const char *progname)
 int main(int argc, char *argv[]) 
 {
         char *time_file_name = NULL;
+        (void) time_file_name;
         int   rotation       = 0;
         int   i;
 

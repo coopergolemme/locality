@@ -1,7 +1,12 @@
 #include "uarray2b.h"
+#include "uarray2.h"
 #include <uarray.h>
 #include <math.h>
-typedef struct T *T{
+#include "assert.h"
+#include "mem.h"
+#define T UArray2b_T
+
+struct T {
     int height;
     int width;
     int size; 
@@ -9,37 +14,32 @@ typedef struct T *T{
     UArray2_T elems;
 };
 
-T UArray2b_new(int width, int height, int size, int blocksize);
-T UArray2b_new_64K_block(int width, int height, int size);
-void UArray2b_free(T *array2b);
-int UArray2b_width(T array2b);
-int UArray2b_height(T array2b);
-int UArray2b_size(T array2b);
-int UArray2b_blocksize(T array2b);
-extern void *UArray2b_at(T array2b, int column, int row);
-extern void  UArray2b_map(T array2b, void apply(int col, int row, T array2b,
-                                     void *elem, void *cl), void *cl);
 
 
+int main (int argc, char **argv)
+{
+    (void) argc; (void) argv;
 
-// TODO FIX THIS 
+    return 0;
+}
+
 T UArray2b_new(int width, int height, int size, int blocksize)
 {
     assert(width >= 0 && height >= 0); // ??
     T uarray2b;
     NEW(uarray2b);
-    uarray2b = {
-        height;
-        width;
-        size;
-        blocksize;
-    };
+
+    uarray2b->height = height;
+    uarray2b->width = width;
+    uarray2b->size = size;
+    uarray2b->blocksize = blocksize;
+
     int x = ceil(sqrt(blocksize));
     uarray2b->elems = UArray2_new(x, x, size);
-    for (int i = 0; i < UArray_length(elems); i++) {
-        for (int j = 0; j < UArray_length(elems); j++) {
-            UArray2_T elem = UArray_at(uarray2b->elems, j, i);
-            elem = UArray_new(x, size);
+    for (int i = 0; i < UArray2_height(uarray2b->elems); i++) {
+        for (int j = 0; j < UArray2_width(uarray2b->elems); j++) {
+            UArray_T* elem = UArray2_at(uarray2b->elems, j, i);
+            *elem = UArray_new(x, size);
         }
     }
     return uarray2b;
@@ -56,6 +56,13 @@ T UArray2b_new_64K_block(int width, int height, int size)
 void UArray2b_free(T *array2b)
 {
     assert(array2b);
+    for (int i = 0; i < UArray2_height((*array2b)->elems); i++) {
+        for (int j = 0; j < UArray2_width((*array2b)->elems); j++) {
+            UArray_free(UArray2_at((*array2b)->elems, i, j));
+        }
+    }
+    UArray2_free(&((*array2b)->elems));
+    FREE(*array2b);
 }
 
 int UArray2b_width(T array2b)
@@ -92,7 +99,7 @@ extern void *UArray2b_at(T array2b, int column, int row)
     assert(column < array2b->width && row < array2b->height);
     assert(column >= 0 && row >= 0);
     
-    UArray2_T temp = UArray2_at(array2b, column / array2b->blocksize, 
+    UArray_T temp = UArray2_at((*array2b).elems, column / array2b->blocksize, 
                                 row / array2b->blocksize);
                                 
     return UArray_at(temp,
@@ -109,10 +116,12 @@ extern void  UArray2b_map(T array2b,
     assert(array2b && apply);
     for (int col = 0; col < array2b->width; col++) {
         for (int row = 0; row < array2b->height; row++) {
-            T elem = UArray2b_at(array2b, col, row);
-            for (int k = 0; k < blocksize; k++) {
+            UArray_T elem = UArray2b_at(array2b, col, row);
+            for (int k = 0; k < array2b->blocksize; k++) {
                 apply(col, row, array2b, UArray_at(elem, k), cl);
             }
         }
     }
 }
+
+#undef T
