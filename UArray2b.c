@@ -20,6 +20,20 @@ int main (int argc, char **argv)
 {
     (void) argc; (void) argv;
 
+    int width = 5;
+    int height = 10;
+    int size = sizeof(int);
+    int blocksize = 4;
+    T test_array = UArray2b_new(width, height, size, blocksize);
+
+    printf("test array width: %i\n", width);
+    printf("test array height: %i\n", height);
+    printf("test array size: %i\n", size);
+    printf("test array blocksize: %i\n", blocksize);
+
+    
+
+
     return 0;
 }
 
@@ -87,7 +101,6 @@ int UArray2b_blocksize(T array2b)
 {
     assert(array2b);
     return array2b->blocksize;
-
 }
 
 /* return a pointer to the cell in the given column and row.
