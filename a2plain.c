@@ -39,7 +39,7 @@ static void *at(A2 array2, int i, int j){
         return UArray2_at(array2, i, j);
 }
 
-// static int blocksize(A2 array2)
+// static int blocksize(A2 array2) // ????
 // {
 //         return;
 // }
