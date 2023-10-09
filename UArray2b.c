@@ -127,16 +127,29 @@ void UArray2b_free(T *array2b)
 {
     assert(array2b);
     
+    
     for (int i = 0; i < UArray2_height((*array2b)->elems); i++) {
         for (int j = 0; j < UArray2_width((*array2b)->elems); j++) {
             UArray_free(UArray2_at((*array2b)->elems, j, i));
         }
     }
     
+    
     UArray2_free(&((*array2b)->elems));
     FREE(*array2b);
 }
 
+/********** UArray2b_width ********
+ *
+ * Purpose:
+ * 
+ * Inputs: 
+ *	    
+ * Return: 
+ *
+ * Notes: 
+ * 
+ ************************/
 /********** UArray2b_width ********
  *
  * Purpose:
@@ -233,6 +246,17 @@ int flattened_index(int col, int row, int width)
  * Notes: 
  * 
  ************************/
+ /********** Block_at ********
+ *
+ * Purpose:
+ * 
+ * Inputs: 
+ *	    
+ * Return: 
+ *
+ * Notes: 
+ * 
+ ************************/
 void *Block_at(T array2b, int column, int row)
 {
     assert(array2b);
@@ -246,6 +270,17 @@ void *Block_at(T array2b, int column, int row)
     return block;
 }
 
+/********** UArray2b_at ********
+ *
+ * Purpose:
+ * 
+ * Inputs: 
+ *	    
+ * Return: 
+ *
+ * Notes: 
+ * 
+ ************************/
 /********** UArray2b_at ********
  *
  * Purpose:
