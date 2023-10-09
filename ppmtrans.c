@@ -2,12 +2,14 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
 
 #include "assert.h"
-#include "a2methods.h"
-#include "a2plain.h"
-#include "a2blocked.h"
-#include "pnm.h"
+#include "fileutil.h"
+#include "transformations.h"
+#include "cputiming.h"
+
+
 
 #define SET_METHODS(METHODS, MAP, WHAT) do {                    \
         methods = (METHODS);                                    \
@@ -21,6 +23,8 @@
         }                                                       \
 } while (false)
 
+void open_and_rotate(char *filename, int rotation);
+
 static void
 usage(const char *progname)
 {
@@ -30,11 +34,13 @@ usage(const char *progname)
         exit(1);
 }
 
+
 int main(int argc, char *argv[]) 
 {
         char *time_file_name = NULL;
         (void) time_file_name;
         int   rotation       = 0;
+        char *input_filename;
         int   i;
 
         /* default to UArray2 methods */
@@ -45,7 +51,9 @@ int main(int argc, char *argv[])
         A2Methods_mapfun *map = methods->map_default; 
         assert(map);
 
+        printf("hello?\n");
         for (i = 1; i < argc; i++) {
+                printf("in for?\n");
                 if (strcmp(argv[i], "-row-major") == 0) {
                         SET_METHODS(uarray2_methods_plain, map_row_major, 
                                     "row-major");
@@ -67,6 +75,11 @@ int main(int argc, char *argv[])
                                         "Rotation must be 0, 90 180 or 270\n");
                                 usage(argv[0]);
                         }
+                        else {
+                                printf("HERE\n");
+                                input_filename = (i+1 > argc) ? NULL : argv[i+1];
+                                open_and_rotate(input_filename, rotation);     
+                        }
                         if (!(*endptr == '\0')) {    /* Not a number */
                                 usage(argv[0]);
                         }
@@ -85,6 +98,16 @@ int main(int argc, char *argv[])
                         break;
                 }
         }
-
-        assert(false);    // the rest of this function is not yet implemented
+        
+        // usage(argv[0]);
+}
+void open_and_rotate(char *filename, int rotation)
+{
+        A2Methods_T methods = uarray2_methods_plain;
+        Pnm_ppm source_ppm = make_A2(filename);
+        A2 source_pix = source_ppm->pixels;
+        A2 transformed = rotate(source_ppm, rotation);
+        write_A2(transformed, source_ppm);
+        methods->free(&source_pix);
+        Pnm_ppmfree(&source_ppm);
 }
