@@ -3,6 +3,8 @@
 #include <a2plain.h>
 #include "uarray2.h"
 
+
+typedef A2Methods_UArray2 A2;   // private abbreviation
 /************************************************/
 /* Define a private version of each function in */
 /* A2Methods_T that we implement.               */
@@ -20,29 +22,36 @@ static A2Methods_UArray2 new_with_blocksize(int width, int height, int size,
         return UArray2_new(width, height, size);
 }
 
-
-static void a2free(A2 *array2){
-        UArray2_free(array2);
+static void a2free(A2 *array2)
+{
+        UArray2_free((UArray2_T *) array2); // cast to UArray2_T?
 }
-static int height(A2 array2){
+
+static int height(A2 array2)
+{
         return UArray2_height(array2);
-
 }
-static int width(A2 array2){
+
+static int width(A2 array2)
+{
        return UArray2_width(array2); 
 }
-static int size(A2 array2){
+
+static int size(A2 array2)
+{
         return UArray2_size(array2);       
 }
 
-static void *at(A2 array2, int i, int j){
+static void *at(A2 array2, int i, int j)
+{
         return UArray2_at(array2, i, j);
 }
 
-// static int blocksize(A2 array2) // ????
-// {
-//         return;
-// }
+static int blocksize(A2 array2) // ????
+{
+        (void) array2;
+        return -1;
+}
 
 static void map_row_major(A2Methods_UArray2 uarray2,
                           A2Methods_applyfun apply,
@@ -98,13 +107,13 @@ static struct A2Methods_T uarray2_methods_plain_struct = {
         width,
         height,
         size,
-        NULL,                            //blocksize
+        blocksize,                            //blocksize
         at,
         map_row_major,                   // map_row_major
         map_col_major,                   // map_col_major
-        NULL,                   // *Null  Blockmajor*
-        map_row_major,        // map_default *change*
-        small_map_row_major,                   // small_map_row_major
+        NULL,                           // *Null  Blockmajor* ?????
+        map_row_major,                  // map_default *change*
+        small_map_row_major,            // small_map_row_major
         small_map_col_major,                   // small_map_col_major
         NULL,                   // *Null  small Blockmajor*
         small_map_row_major,  // small_map_default *change*

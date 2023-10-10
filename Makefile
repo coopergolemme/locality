@@ -59,9 +59,6 @@ all: ppmtrans a2test timing_test
 %.o: %.c $(INCLUDES)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# uarray2b.o: uarray2sb.c uarray2b.h
-# 	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS)
-
 ## Linking step (.o -> executable program)
 uarray2btest: uarray2b.o  uarray2.o 
 		$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS)
@@ -72,7 +69,7 @@ a2test: a2test.o uarray2b.o uarray2.o a2plain.o
 #timing_test: timing_test.o cputiming.o
 # 	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS) 
 
-ppmtrans: ppmtrans.o cputiming.o the-rest-of-your-files.o
+ppmtrans: ppmtrans.o  a2plain.o uarray2b.o uarray2.o a2blocked.o transformations.o fileutil.o
 	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS)
 
 
