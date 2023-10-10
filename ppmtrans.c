@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
+#include <time.h>
 
 #include "assert.h"
 #include "fileutil.h"
@@ -41,6 +42,7 @@ int main(int argc, char *argv[])
         (void) time_file_name;
         int   rotation       = 0;
         char *input_filename;
+        char *input_filename;
         int   i;
         // int ir;
 
@@ -52,7 +54,9 @@ int main(int argc, char *argv[])
         A2Methods_mapfun *map = methods->map_default; 
         assert(map);
 
+        printf("hello?\n");
         for (i = 1; i < argc; i++) {
+                printf("in for?\n");
                 printf("in for?\n");
                 if (strcmp(argv[i], "-row-major") == 0) {
                         SET_METHODS(uarray2_methods_plain, map_row_major, 
@@ -79,6 +83,11 @@ int main(int argc, char *argv[])
                                 fprintf(stderr, 
                                         "Rotation must be 0, 90 180 or 270\n");
                                 usage(argv[0]);
+                        }
+                        else {
+                                printf("HERE\n");
+                                input_filename = (i+1 > argc) ? NULL : argv[i+1];
+                                open_and_rotate(input_filename, rotation);     
                         }
                         if (!(*endptr == '\0')) {    /* Not a number */
                                 usage(argv[0]);

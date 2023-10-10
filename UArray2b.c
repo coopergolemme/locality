@@ -46,16 +46,6 @@ void fill_test(int i, int j, UArray2b_T a, void *p1, void *p2);
 //     return 0;
 // }
 
-/********** UArray2b_new ********
- *
- * Purpose:
- * Inputs:  
- *
- * Return: 
- *
- * Notes: 
- * 
- ************************/
 T UArray2b_new(int width, int height, int size, int blocksize)
 {
     fprintf(stderr, "NEw with block\n");
@@ -134,28 +124,15 @@ T UArray2b_new_64K_block(int width, int height, int size)
 void UArray2b_free(T *array2b)
 {
     assert(array2b);
-    
     for (int i = 0; i < UArray2_height((*array2b)->elems); i++) {
         for (int j = 0; j < UArray2_width((*array2b)->elems); j++) {
             UArray_free(UArray2_at((*array2b)->elems, j, i));
         }
     }
-    
     UArray2_free(&((*array2b)->elems));
     FREE(*array2b);
 }
 
-/********** UArray2b_width ********
- *
- * Purpose:
- * 
- * Inputs: 
- *	    
- * Return: 
- *
- * Notes: 
- * 
- ************************/
 int UArray2b_width(T array2b)
 {
     assert(array2b);
@@ -230,17 +207,11 @@ int flattened_index(int col, int row, int width)
 }
 
 
- /********** Block_at ********
- *
- * Purpose:
- * 
- * Inputs: 
- *	    
- * Return: 
- *
- * Notes: 
- * 
- ************************/
+
+
+/* return a pointer to the cell in the given column and row.
+ * index out of range is a checked run-time error
+ */
 void *Block_at(T array2b, int column, int row)
 {
     assert(array2b);
@@ -254,17 +225,6 @@ void *Block_at(T array2b, int column, int row)
     return block;
 }
 
-/********** UArray2b_at ********
- *
- * Purpose:
- * 
- * Inputs: 
- *	    
- * Return: 
- *
- * Notes: 
- * 
- ************************/
 void *UArray2b_at(T array2b, int column, int row)
 {
     int bs = array2b->blocksize;
