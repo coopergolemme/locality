@@ -1,3 +1,16 @@
+/**************************************************************
+ *
+ *                     fileutil.c
+ *
+ *     Assignment: iii
+ *     Authors: Liam Smith (lsmith26) and Cooper Golemme (UTLN)
+ *     Date: October 10, 2023
+ * 
+ *      Purpose
+ *
+ *
+ **************************************************************/
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
