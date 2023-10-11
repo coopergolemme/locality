@@ -56,9 +56,8 @@ void apply_rotate270(int i, int j, A2 array2, void *source, void *dest);
  ************************/
 A2 rotate(Pnm_ppm source_ppm, int degree, A2Methods_T method_type)
 {
-        methods = method_type; 
+    methods = method_type; 
 
-    // printf("INSIDE ROTATE\n");
     
     A2 source = source_ppm->pixels;
     int source_width = methods->width(source);

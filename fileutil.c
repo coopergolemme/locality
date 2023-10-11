@@ -46,14 +46,6 @@ static A2Methods_T methods;
  ************************/
 Pnm_ppm make_A2(char *filename, A2Methods_T method_type)
 {
-<<<<<<< HEAD
-    FILE *fp = (filename == NULL) ? stdin : open_or_fail(filename, "rb");
-    Pnm_ppm data = Pnm_ppmread(fp, method_type);
-    
-    fclose(fp);
-
-    return data;
-=======
     
         // methods = method_type;
         FILE *fp = (filename == NULL) ? stdin : open_or_fail(filename, "rb");
@@ -61,7 +53,6 @@ Pnm_ppm make_A2(char *filename, A2Methods_T method_type)
         fclose(fp);
 
         return data;
->>>>>>> 401832b (comments)
 }
 
 /********** write_A2 ********
@@ -89,22 +80,12 @@ Pnm_ppm make_A2(char *filename, A2Methods_T method_type)
  ************************/
 void write_A2(A2 transformed, Pnm_ppm source, A2Methods_T method_type)
 {
-<<<<<<< HEAD
-    methods = method_type;
-
-    source->pixels = transformed;
-    source->width = methods->width(transformed);
-    source->height =  methods->height(transformed);
-
-    Pnm_ppmwrite(stdout, source);
-=======
         methods = method_type;
         source->pixels = transformed;
         source->width = methods->width(transformed);
         source->height =  methods->height(transformed);
         fprintf(stderr, "Writeing to file\n");
         Pnm_ppmwrite(stdout, source);
->>>>>>> 401832b (comments)
 }
 
 void write_timing(char *timing_filename, double time, int width, int height) {
