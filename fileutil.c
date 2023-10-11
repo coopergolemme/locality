@@ -89,10 +89,10 @@ void write_A2(A2 transformed, Pnm_ppm source, A2Methods_T method_type)
 }
 
 void write_timing(char *timing_filename, double time, int width, int height) {
-    (void)width;
-    (void)height;
-    FILE *tf = open_or_fail(timing_filename, "w");
-    fprintf(tf, "%f", time);
+        (void)width;
+        (void)height;
+        FILE *tf = open_or_fail(timing_filename, "w");
+        fprintf(tf, "%f", time);
 }
 
 /********** open_or_fail ********

@@ -1,6 +1,6 @@
 /**************************************************************
  *
- *                     UArray2b.c WHY IS THIS STILL CAPIAL??!
+ *                     uarray2b.c
  *
  *      Assignment: locality
  *      Authors: Liam Smith (lsmith26) and Cooper Golemme (UTLN)
