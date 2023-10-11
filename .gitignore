@@ -1,4 +1,5 @@
 .vscode
 *.o
+*.ppm
 .fullname
 .partner
