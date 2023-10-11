@@ -73,9 +73,9 @@ A2 rotate(Pnm_ppm source_ppm, int degree, A2Methods_T method_type)
                 dest = methods->new(source_width, source_height, pixel_size);
                 methods->map_default(source, apply_rotate180, dest);
 
-        } else if (degree == 270) {
-                dest = methods->new(source_height, source_width, pixel_size);
-                methods->map_default(source, apply_rotate270, dest);
+        // } else if (degree == 270) {
+        //         dest = methods->new(source_height, source_width, pixel_size);
+        //         methods->map_default(source, apply_rotate270, dest);
 
         } else if (degree == 0) {
                 return source;
