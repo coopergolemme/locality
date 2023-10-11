@@ -56,13 +56,13 @@ void apply_rotate270(int i, int j, A2 array2, void *source, void *dest);
  ************************/
 A2 rotate(Pnm_ppm source_ppm, int degree, A2Methods_T method_type)
 {
-    methods = method_type; 
+        methods = method_type; 
 
-    
-    A2 source = source_ppm->pixels;
-    int source_width = methods->width(source);
-    int source_height = methods->height(source);
-    int pixel_size = methods->size(source_ppm->pixels);
+        
+        A2 source = source_ppm->pixels;
+        int source_width = methods->width(source);
+        int source_height = methods->height(source);
+        int pixel_size = methods->size(source_ppm->pixels);
 
         A2 dest;
     
@@ -79,7 +79,7 @@ A2 rotate(Pnm_ppm source_ppm, int degree, A2Methods_T method_type)
                 methods->map_default(source, apply_rotate270, dest);
 
         } else if (degree == 0) {
-                return source; // fix this, maybe do the same as above with zero function
+                return source;
             
         } else {
                 return NULL; 

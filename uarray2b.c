@@ -423,15 +423,16 @@ extern void  UArray2b_map(T array2b,
         for (int row = 0; row < num_blocks_height; row++) {
                 for (int col = 0; col < num_blocks_width; col++) {
 
-                        UArray_T *block = Block_at(array2b, col, row);
+                        UArray_T *block = UArray2_at(array2b->elems, col, row);
+
                         // printf("NEW BLOCK at [col, row] : [%d, %d]\n", col, row);
                         for (int block_col = 0; block_col < blocksize; block_col++) { // change to bCol
                                 for (int block_row = 0; block_row < blocksize; block_row++) { // change to bRow
                                     
                                         bool beyond_width = col * blocksize + 
-                                            (block_row + 1) > array2b->width;
+                                            (block_col + 1) > array2b->width;
                                         bool beyond_height = row * blocksize + 
-                                            (block_col + 1) > array2b->height;
+                                            (block_row + 1) > array2b->height;
 
                                         if (beyond_width || beyond_height) {
                                                 continue;
@@ -441,7 +442,7 @@ extern void  UArray2b_map(T array2b,
                                                                                 block_row, 
                                                                                 blocksize);
                                                 void *elem = UArray_at(*block, uarray_index);
-                                                apply(col, row, array2b, elem, cl);
+                                                apply(col * blocksize + block_col, row * blocksize + block_row, array2b, elem, cl);
                                         }
                                 }
                         }

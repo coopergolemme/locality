@@ -84,7 +84,6 @@ void write_A2(A2 transformed, Pnm_ppm source, A2Methods_T method_type)
         source->pixels = transformed;
         source->width = methods->width(transformed);
         source->height =  methods->height(transformed);
-        fprintf(stderr, "Writeing to file\n");
         Pnm_ppmwrite(stdout, source);
 }
 
