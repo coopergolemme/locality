@@ -25,6 +25,8 @@
 } while (false)
 
 void open_and_rotate(char *filename, int rotation, A2Methods_T method_type);
+void timer_write(char *timing_file, double time);
+void open_and_rotate_timed(char *image_filename, int rotation, A2Methods_T method_type, char *timing_filename);
 
 static void
 usage(const char *progname)
@@ -42,7 +44,6 @@ int main(int argc, char *argv[])
         (void) time_file_name;
         int   rotation       = 0;
         char *input_filename;
-        char *input_filename;
         int   i;
         // int ir;
 
@@ -53,11 +54,7 @@ int main(int argc, char *argv[])
         /* default to best map */
         A2Methods_mapfun *map = methods->map_default; 
         assert(map);
-
-        printf("hello?\n");
         for (i = 1; i < argc; i++) {
-                printf("in for?\n");
-                printf("in for?\n");
                 if (strcmp(argv[i], "-row-major") == 0) {
                         SET_METHODS(uarray2_methods_plain, map_row_major, 
                                     "row-major");
@@ -84,11 +81,6 @@ int main(int argc, char *argv[])
                                         "Rotation must be 0, 90 180 or 270\n");
                                 usage(argv[0]);
                         }
-                        else {
-                                printf("HERE\n");
-                                input_filename = (i+1 > argc) ? NULL : argv[i+1];
-                                open_and_rotate(input_filename, rotation);     
-                        }
                         if (!(*endptr == '\0')) {    /* Not a number */
                                 usage(argv[0]);
                         }
@@ -107,17 +99,47 @@ int main(int argc, char *argv[])
                 }
         }
         input_filename = (time_file_name == NULL) ? argv[i] : argv[i - 2];
-        open_and_rotate(input_filename, rotation, methods);
+        
+        if(time_file_name == NULL) {
+                open_and_rotate(input_filename, rotation, methods);
+        }
+
+        else {
+                open_and_rotate_timed(input_filename,
+                                      rotation, 
+                                      methods, 
+                                      time_file_name);
+        }
+}
+
+void timer_write(char *timing_file, double time){
+        (void)timing_file;
+        (void)time;
+        return;
+}
+
+void open_and_rotate_timed(char *image_filename, 
+                           int rotation,
+                           A2Methods_T method_type,
+                           char *timing_filename)
+{
+        CPU_Time timer = CPUTime_New();
+        CPUTime_Start(timer);
+
+        open_and_rotate(image_filename, rotation, method_type);
+
+        double time = CPUTime_Stop(timer);
+        timer_write(timing_filename, time);
+
+        CPUTime_Free(&timer);
 }
 
 void open_and_rotate(char *filename, int rotation, A2Methods_T method_type)
 {
-        // methods = uarray2_methods_plain;
         A2Methods_T methods = method_type;
-        // (void) method_type;
-        // A2Methods_T methods = uarray2_methods_blocked;
 
         Pnm_ppm source_ppm = make_A2(filename, methods);
+        
         A2 source_pix = source_ppm->pixels;
         A2 transformed = rotate(source_ppm, rotation, methods);
         write_A2(transformed, source_ppm, methods);
