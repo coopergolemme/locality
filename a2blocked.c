@@ -10,14 +10,11 @@ typedef A2Methods_UArray2 A2;   // private abbreviation
 
 static A2 new(int width, int height, int size)
 {
-        fprintf(stderr, "new\n");
-
         return UArray2b_new_64K_block(width, height, size);
 }
 
 static A2 new_with_blocksize(int width, int height, int size, int blocksize)
 {
-        fprintf(stderr, "new blocksize\n");
         return UArray2b_new(width, height, size, blocksize);
 }
 

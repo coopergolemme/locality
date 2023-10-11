@@ -94,8 +94,6 @@ struct T {
  ************************/
 T UArray2b_new(int width, int height, int size, int blocksize)
 {
-        fprintf(stderr, "NEw with block\n");
-
         assert(width >= 0 && height >= 0); // ??
         T uarray2b;
         NEW(uarray2b);
@@ -161,7 +159,6 @@ T UArray2b_new_64K_block(int width, int height, int size)
 
         int bs = (size >= kbs) ? bs = 1 : bs2;
 
-        fprintf(stderr, "%d", bs);
         return UArray2b_new(width, height, size, bs);
 }
 

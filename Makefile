@@ -66,8 +66,8 @@ uarray2btest: uarray2b.o  uarray2.o
 a2test: a2test.o uarray2b.o uarray2.o a2plain.o
 	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS)
 
-#timing_test: timing_test.o cputiming.o
-# 	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS) 
+timing_test: timing_test.o cputiming.o
+	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS) 
 
 ppmtrans: ppmtrans.o  a2plain.o uarray2b.o uarray2.o a2blocked.o transformations.o fileutil.o cputiming.o
 	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS)

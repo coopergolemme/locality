@@ -37,8 +37,6 @@ static int is_ok(T a)
 #line 109 "www/solutions/uarray2.nw"
 T UArray2_new(int width, int height, int size)
 {
-        fprintf(stderr, "Uarray2 new\n");
-
         int i;  /* interates over row number */
         T array;
         NEW(array);

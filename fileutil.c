@@ -46,9 +46,8 @@ static A2Methods_T methods;
  ************************/
 Pnm_ppm make_A2(char *filename, A2Methods_T method_type)
 {
-    
-        // methods = method_type;
         FILE *fp = (filename == NULL) ? stdin : open_or_fail(filename, "rb");
+
         Pnm_ppm data = Pnm_ppmread(fp, method_type);
         fclose(fp);
 

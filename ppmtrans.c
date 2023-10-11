@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
                 }
         }
         
-        input_filename = (time_file_name == NULL) ? argv[i] : argv[i - 2];
+        input_filename = argv[i];
         
         if(time_file_name == NULL) {
                 open_and_rotate(input_filename, rotation, methods);

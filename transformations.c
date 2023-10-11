@@ -26,7 +26,6 @@ static A2Methods_T methods;
 // should move to .h file?
 void apply_rotate90(int i, int j, A2 array2, void *source, void *dest);
 void apply_rotate180(int i, int j, A2 array2, void *source, void *dest);
-void apply_rotate270(int i, int j, A2 array2, void *source, void *dest);
 
 /********** rotate ********
  *
@@ -170,38 +169,4 @@ void apply_rotate180(int i, int j, A2 array2, void *source, void *dest)
  *      change variable names?
  * 
  ************************/
-void apply_rotate270(int i, int j, A2 array2, void *source, void *dest)
-{
-        (void) array2;
-        // Pnm_rgb dest_unupdated = methods->at(dest, methods->height(dest) - j - 1, 
-        //                                 i);
-        // *dest_unupdated = *(Pnm_rgb)source;
-        return NULL;
-        // (void) array2;
-}
-
-// extra
-A2 flip_horizontal(A2 array2)
-{
-        (void)array2;
-        return NULL;
-}
-
-// extra
-A2 flip_vertical(A2 array2)
-{
-        (void)array2;
-        return NULL;
-}
-
-// extra
-A2 transpose(A2 array2)
-{
-        (void) array2;
-        return NULL;
-
-        // Pnm_rgb dest_unupdated = methods->at(dest, j,
-        //                                 i);
-        // *dest_unupdated = *(Pnm_rgb)source;
-}
 
