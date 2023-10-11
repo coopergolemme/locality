@@ -7,7 +7,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
+-
 #define T UArray2b_T
+
+
+void check_and_print(int i, int j, UArray2b_T a, void *p1, void *p2);
+void fill_test(int i, int j, UArray2b_T a, void *p1, void *p2);
 
 struct T {
     int height;
@@ -17,17 +22,12 @@ struct T {
     UArray2_T elems;
 };
 
-
-
-void check_and_print(int i, int j, UArray2b_T a, void *p1, void *p2);
-void fill_test(int i, int j, UArray2b_T a, void *p1, void *p2);
-
 // int main (int argc, char **argv)
 // {
 //     (void) argc; (void) argv;
 
-//     int width = 9;
-//     int height = 9;
+//     int width = 5;
+//     int height = 5;
 //     int size = sizeof(int);
 //     int blocksize = 2;
 //     T test_array = UArray2b_new(width, height, size, blocksize);
@@ -37,9 +37,16 @@ void fill_test(int i, int j, UArray2b_T a, void *p1, void *p2);
 //     printf("test array size: %i\n", UArray2b_size(test_array));
 //     printf("test array blocksize: %i\n", UArray2b_blocksize(test_array));
 //     int x = 0;
+    
 //     UArray2b_map(test_array, fill_test, &x);
 //     printf("\nNumber of maps: %d\n", x);
+   
 //     UArray2b_map(test_array, check_and_print, NULL);
+
+//     int *c = UArray2b_at(test_array, 4, 1);
+//     fprintf(stderr, "At: %d\n", *c);
+//     (void)c;
+
 
 //     UArray2b_free(&test_array); 
 
@@ -60,11 +67,11 @@ T UArray2b_new(int width, int height, int size, int blocksize)
     uarray2b->blocksize = blocksize;
 
     int uarray2_dim_width = width / blocksize;
-    if (width % blocksize != 0){
+    if (width % blocksize != 0) {
         uarray2_dim_width++;
     }
     int uarray2_dim_height = height / blocksize;
-    if (height % blocksize != 0){
+    if (height % blocksize != 0) {
         uarray2_dim_height++;
     }
 
@@ -206,9 +213,6 @@ int flattened_index(int col, int row, int width)
     return width * row + col;
 }
 
-
-
-
 /* return a pointer to the cell in the given column and row.
  * index out of range is a checked run-time error
  */
@@ -227,6 +231,7 @@ void *Block_at(T array2b, int column, int row)
 
 void *UArray2b_at(T array2b, int column, int row)
 {
+    // could be the problem
     int bs = array2b->blocksize;
     UArray_T *block = Block_at(array2b, column, row);
 
@@ -263,15 +268,15 @@ extern void  UArray2b_map(T array2b,
     for (int row = 0; row < num_blocks_height; row++) {
         for (int col = 0; col < num_blocks_width; col++) {
 
-            UArray_T *block = Block_at(array2b, col, row);
+            UArray_T *block = UArray2_at(array2b->elems, col, row);
             // printf("NEW BLOCK at [col, row] : [%d, %d]\n", col, row);
             for(int block_col = 0; block_col < blocksize; block_col++) {
                 for (int block_row = 0; block_row < blocksize; block_row++) {
                     
                     bool beyond_width = col * blocksize + 
-                                        (block_row + 1) > array2b->width;
+                                        (block_col + 1) > array2b->width;
                     bool beyond_height = row * blocksize + 
-                                         (block_col + 1) > array2b->height;
+                                         (block_row + 1) > array2b->height;
 
                     if (beyond_width || beyond_height) {
                         continue;
@@ -281,7 +286,7 @@ extern void  UArray2b_map(T array2b,
                                                            block_row, 
                                                            blocksize);
                         void *elem = UArray_at(*block, uarray_index);
-                        apply(col, row, array2b, elem, cl);
+                        apply(col * blocksize + block_col, row * blocksize + block_row, array2b, elem, cl);
                     }
                 }
             }
@@ -303,7 +308,8 @@ extern void  UArray2b_map(T array2b,
 void check_and_print(int col, int row, UArray2b_T a, void *elem, void *cl) 
 {
     (void) a; (void) cl;
-    printf("ar[%d,%d]: %d\n", col, row, *(int*)elem);
+    printf("Using at: ar[%d,%d]: %d\n", col, row, *(int*)UArray2b_at(a, col, row));
+    printf("Using map: ar[%d,%d]: %d\n", col, row, *(int*)elem);
 }
 
 /********** fill_test ********
@@ -322,6 +328,7 @@ void fill_test(int i, int j, UArray2b_T a, void *elem, void *cl)
     (void) a; (void) i; (void) j;
     int *sum = cl;
     *sum = *sum + 1;
+
     int *int_elem = elem;
     *int_elem = *sum;
 }

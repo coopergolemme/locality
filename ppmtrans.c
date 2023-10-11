@@ -42,7 +42,6 @@ int main(int argc, char *argv[])
         (void) time_file_name;
         int   rotation       = 0;
         char *input_filename;
-        char *input_filename;
         int   i;
         // int ir;
 
@@ -84,11 +83,6 @@ int main(int argc, char *argv[])
                                         "Rotation must be 0, 90 180 or 270\n");
                                 usage(argv[0]);
                         }
-                        else {
-                                printf("HERE\n");
-                                input_filename = (i+1 > argc) ? NULL : argv[i+1];
-                                open_and_rotate(input_filename, rotation);     
-                        }
                         if (!(*endptr == '\0')) {    /* Not a number */
                                 usage(argv[0]);
                         }
@@ -118,6 +112,7 @@ void open_and_rotate(char *filename, int rotation, A2Methods_T method_type)
         // A2Methods_T methods = uarray2_methods_blocked;
 
         Pnm_ppm source_ppm = make_A2(filename, methods);
+        
         A2 source_pix = source_ppm->pixels;
         A2 transformed = rotate(source_ppm, rotation, methods);
         write_A2(transformed, source_ppm, methods);
