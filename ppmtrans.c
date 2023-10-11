@@ -9,6 +9,7 @@
 #include "fileutil.h"
 #include "transformations.h"
 #include "cputiming.h"
+#include "cputiming_impl.h"
 
 
 
@@ -24,7 +25,12 @@
         }                                                       \
 } while (false)
 
-void open_and_rotate(char *filename, int rotation, A2Methods_T method_type);
+typedef struct Dimensions{
+        int width;
+        int height;
+} Dimensions;
+
+Dimensions open_and_rotate(char *filename, int rotation, A2Methods_T method_type);
 void timer_write(char *timing_file, double time);
 void open_and_rotate_timed(char *image_filename, int rotation, A2Methods_T method_type, char *timing_filename);
 
@@ -123,27 +129,33 @@ void open_and_rotate_timed(char *image_filename,
                            A2Methods_T method_type,
                            char *timing_filename)
 {
-        CPU_Time timer = CPUTime_New();
+        CPUTime_T timer = CPUTime_New();
         CPUTime_Start(timer);
 
-        open_and_rotate(image_filename, rotation, method_type);
+        Dimensions dims = open_and_rotate(image_filename, rotation, method_type);
 
         double time = CPUTime_Stop(timer);
-        timer_write(timing_filename, time);
+        write_timing(timing_filename, time, dims.width, dims.height);
 
         CPUTime_Free(&timer);
 }
 
-void open_and_rotate(char *filename, int rotation, A2Methods_T method_type)
+Dimensions open_and_rotate(char *filename, int rotation, A2Methods_T method_type)
 {
         A2Methods_T methods = method_type;
 
         Pnm_ppm source_ppm = make_A2(filename, methods);
         
         A2 source_pix = source_ppm->pixels;
+
+        Dimensions dims;
+        dims.height = methods->height(source_pix);
+        dims.width = methods->width(source_pix);
+
         A2 transformed = rotate(source_ppm, rotation, methods);
         write_A2(transformed, source_ppm, methods);
         
         if (rotation != 0) methods->free(&source_pix);
         Pnm_ppmfree(&source_ppm);
+        return dims;
 }
