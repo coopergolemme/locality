@@ -118,6 +118,7 @@ int main(int argc, char *argv[])
                         break;
                 }
         }
+        
         input_filename = (time_file_name == NULL) ? argv[i] : argv[i - 2];
         
         if(time_file_name == NULL) {
