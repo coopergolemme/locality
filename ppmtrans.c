@@ -3,7 +3,7 @@
  *                     ppmtrans.c
  *
  *      Assignment: locality
- *      Authors: Liam Smith (lsmith26) and Cooper Golemme (UTLN)
+ *      Authors: Liam Smith (lsmith26) and Cooper Golemme (cgolem01)
  *      Date: October 10, 2023
  * 
  *      ppmtrans is the core of the program that takes user input to determine

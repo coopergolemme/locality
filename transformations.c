@@ -3,7 +3,7 @@
  *                     transformations.c
  *
  *      Assignment: locality
- *      Authors: Liam Smith (lsmith26) and Cooper Golemme (UTLN)
+ *      Authors: Liam Smith (lsmith26) and Cooper Golemme (cgolem01)
  *      Date: October 10, 2023
  * 
  *      Transformation functions used to rotate an image and map

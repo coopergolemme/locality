@@ -3,7 +3,7 @@
  *                     uarray2b.c
  *
  *      Assignment: locality
- *      Authors: Liam Smith (lsmith26) and Cooper Golemme (UTLN)
+ *      Authors: Liam Smith (lsmith26) and Cooper Golemme (cgolem01)
  *      Date: October 10, 2023
  * 
  *      Creation of a UArray2b as a UArray created two dimensionally,
@@ -105,16 +105,6 @@ T UArray2b_new(int width, int height, int size, int blocksize)
         uarray2b->size = size;
         uarray2b->blocksize = blocksize;
 
-<<<<<<< HEAD:uarray2b.c
-    int uarray2_dim_width = width / blocksize;
-    if (width % blocksize != 0) {
-        uarray2_dim_width++;
-    }
-    int uarray2_dim_height = height / blocksize;
-    if (height % blocksize != 0) {
-        uarray2_dim_height++;
-    }
-=======
         int uarray2_dim_width = width / blocksize;
         if (width % blocksize != 0) {
                 uarray2_dim_width++;
@@ -123,7 +113,6 @@ T UArray2b_new(int width, int height, int size, int blocksize)
         if (height % blocksize != 0) {
                 uarray2_dim_height++;
         }
->>>>>>> 401832b (comments):UArray2b.c
 
         int size_of_elem = blocksize * blocksize * size;
 
@@ -385,14 +374,8 @@ void *Block_at(T array2b, int column, int row)
  ************************/
 void *UArray2b_at(T array2b, int column, int row)
 {
-<<<<<<< HEAD:uarray2b.c
-    // could be the problem
-    int bs = array2b->blocksize;
-    UArray_T *block = Block_at(array2b, column, row);
-=======
         int bs = array2b->blocksize;
         UArray_T *block = Block_at(array2b, column, row);
->>>>>>> 401832b (comments):UArray2b.c
 
         int block_col = column % bs;
         int block_row = row % bs;
@@ -440,17 +423,6 @@ extern void  UArray2b_map(T array2b,
         for (int row = 0; row < num_blocks_height; row++) {
                 for (int col = 0; col < num_blocks_width; col++) {
 
-<<<<<<< HEAD:uarray2b.c
-            UArray_T *block = UArray2_at(array2b->elems, col, row);
-            // printf("NEW BLOCK at [col, row] : [%d, %d]\n", col, row);
-            for(int block_col = 0; block_col < blocksize; block_col++) {
-                for (int block_row = 0; block_row < blocksize; block_row++) {
-                    
-                    bool beyond_width = col * blocksize + 
-                                        (block_col + 1) > array2b->width;
-                    bool beyond_height = row * blocksize + 
-                                         (block_row + 1) > array2b->height;
-=======
                         UArray_T *block = Block_at(array2b, col, row);
                         // printf("NEW BLOCK at [col, row] : [%d, %d]\n", col, row);
                         for (int block_col = 0; block_col < blocksize; block_col++) { // change to bCol
@@ -460,20 +432,10 @@ extern void  UArray2b_map(T array2b,
                                             (block_row + 1) > array2b->width;
                                         bool beyond_height = row * blocksize + 
                                             (block_col + 1) > array2b->height;
->>>>>>> 401832b (comments):UArray2b.c
 
                                         if (beyond_width || beyond_height) {
                                                 continue;
 
-<<<<<<< HEAD:uarray2b.c
-                    } else {
-                        int uarray_index = flattened_index(block_col, 
-                                                           block_row, 
-                                                           blocksize);
-                        void *elem = UArray_at(*block, uarray_index);
-                        apply(col * blocksize + block_col, row * blocksize + block_row, array2b, elem, cl);
-                    }
-=======
                                         } else {
                                                 int uarray_index = flattened_index(block_col, 
                                                                                 block_row, 
@@ -483,61 +445,25 @@ extern void  UArray2b_map(T array2b,
                                         }
                                 }
                         }
->>>>>>> 401832b (comments):UArray2b.c
                 }
         }
 }
 
-/********** check_and_print ********
- *
- * Purpose: keep?
- * 
- * Inputs: 
- *	    
- * Return: 
- *
- * Notes: 
- * 
- ************************/
+
 void check_and_print(int col, int row, UArray2b_T a, void *elem, void *cl) 
 {
-<<<<<<< HEAD:uarray2b.c
-    (void) a; (void) cl;
-    printf("Using at: ar[%d,%d]: %d\n", col, row, *(int*)UArray2b_at(a, col, row));
-    printf("Using map: ar[%d,%d]: %d\n", col, row, *(int*)elem);
-=======
         (void) a; (void) cl;
         printf("ar[%d,%d]: %d\n", col, row, *(int*)elem);
->>>>>>> 401832b (comments):UArray2b.c
 }
 
-/********** fill_test ********
- *
- * Purpose: keep?
- * 
- * Inputs: 
- *	    
- * Return: 
- *
- * Notes: 
- * 
- ************************/
+
 void fill_test(int i, int j, UArray2b_T a, void *elem, void *cl) 
 {
-<<<<<<< HEAD:uarray2b.c
-    (void) a; (void) i; (void) j;
-    int *sum = cl;
-    *sum = *sum + 1;
-
-    int *int_elem = elem;
-    *int_elem = *sum;
-=======
         (void) a; (void) i; (void) j;
         int *sum = cl;
         *sum = *sum + 1;
         int *int_elem = elem;
         *int_elem = *sum;
->>>>>>> 401832b (comments):UArray2b.c
 }
 
 #undef T

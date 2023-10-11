@@ -3,7 +3,7 @@
  *                     fileutil.c
  *
  *      Assignment: locality
- *      Authors: Liam Smith (lsmith26) and Cooper Golemme (UTLN)
+ *      Authors: Liam Smith (lsmith26) and Cooper Golemme (cgolem01)
  *      Date: October 10, 2023
  * 
  *      Creates an A2 based on plain or blocked method type through reading,
@@ -92,7 +92,9 @@ void write_timing(char *timing_filename, double time, int width, int height) {
         (void)width;
         (void)height;
         FILE *tf = open_or_fail(timing_filename, "w");
-        fprintf(tf, "%f", time);
+        fprintf(tf, "Total Time: %f\n", time);
+        fprintf(tf, "Time per pixel: %f\n", time / (width * height));
+
 }
 
 /********** open_or_fail ********
