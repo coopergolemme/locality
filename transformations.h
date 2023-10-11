@@ -1,3 +1,16 @@
+/**************************************************************
+ *
+ *                     transformations.h
+ *
+ *      Assignment: locality
+ *      Authors: Liam Smith (lsmith26) and Cooper Golemme (UTLN)
+ *      Date: October 10, 2023
+ * 
+ *      Function used in the transformation process of an A2 image
+ *
+ *
+ **************************************************************/
+
 #ifndef TRANSFORMATIONS_INCLUDED
 #define TRANSFORMATIONS_INCLUDED
 

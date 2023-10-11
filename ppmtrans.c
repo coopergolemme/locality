@@ -1,3 +1,17 @@
+/**************************************************************
+ *
+ *                     ppmtrans.c
+ *
+ *      Assignment: locality
+ *      Authors: Liam Smith (lsmith26) and Cooper Golemme (UTLN)
+ *      Date: October 10, 2023
+ * 
+ *      ppmtrans is the core of the program that takes user input to determine
+ *      transformation and mapping methods of an image to be transformed
+ *
+ *
+ **************************************************************/
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -140,6 +154,30 @@ void open_and_rotate_timed(char *image_filename,
         CPUTime_Free(&timer);
 }
 
+
+/********** open_and_rotate ********
+ *
+ * Purpose: If file containing image is provided, a rotation of provided
+ * degress is performed, mapped according to row, column, or blocked methods.
+ * 
+ * 
+ * Inputs: 
+ *      char *filename: a string representing image file that A2 will be
+ *      created according to
+ * 
+ *      int rotation: an integer representing the degree of rotation that
+ *      the image will be transformed according to
+ * 
+ *      A2Methods_T method_type: method type (either plain or blocked) that
+ *      will be used to call applicable functions
+ *	    
+ * Return: 
+ *      none (void)
+ *
+ * Notes: What will happen if no input file is provided? Not called, right?
+ *      Just want to confirm
+ * 
+ ************************/
 Dimensions open_and_rotate(char *filename, int rotation, A2Methods_T method_type)
 {
         A2Methods_T methods = method_type;
