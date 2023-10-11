@@ -1,13 +1,12 @@
 /**************************************************************
  *
- *                     sudoku.c
+ *                     transformations.h
  *
- *     Assignment: iii
- *     Authors: Liam Smith (lsmith26) and Yoda Ermias (yermia01)
- *     Date: Sep 28, 2023
+ *      Assignment: locality
+ *      Authors: Liam Smith (lsmith26) and Cooper Golemme (UTLN)
+ *      Date: October 10, 2023
  * 
- *     For properly formatted 9 x 9 files, the files are interpreted as
- *     sudoku solutions or not accordng to typical game rules.
+ *      Function used in the transformation process of an A2 image
  *
  *
  **************************************************************/

@@ -2,11 +2,12 @@
  *
  *                     fileutil.c
  *
- *     Assignment: iii
- *     Authors: Liam Smith (lsmith26) and Cooper Golemme (UTLN)
- *     Date: October 10, 2023
+ *      Assignment: locality
+ *      Authors: Liam Smith (lsmith26) and Cooper Golemme (UTLN)
+ *      Date: October 10, 2023
  * 
- *      Purpose
+ *      Creates an A2 based on plain or blocked method type through reading,
+ *      and writes transformed image to stdout.
  *
  *
  **************************************************************/
@@ -25,13 +26,22 @@ static A2Methods_T methods;
 
 /********** make_A2 ********
  *
- * Purpose:
+ * Purpose: Creates an A2 image that is mapped/created according to plain
+ * or blocked methods. A file is taken as input that contains data of type
+ * Pnm_ppm.
  * 
  * Inputs: 
- *	    
+ *      char *filename: a string representing image file that A2 will be
+ *      created according to
+ * 
+ *      A2Methods_T method_type: method type (either plain or blocked) that
+ *      will be used to call on applicable functions
+ * 
  * Return: 
+ *      A Pnm_ppm that contains a struct containg width and height
+ *      dimensions of an A2 called pixels that holds the ppm image
  *
- * Notes: 
+ * Notes: ?
  * 
  ************************/
 Pnm_ppm make_A2(char *filename, A2Methods_T method_type)
@@ -56,13 +66,25 @@ Pnm_ppm make_A2(char *filename, A2Methods_T method_type)
 
 /********** write_A2 ********
  *
- * Purpose:
+ * Purpose: To stdout, a transformed A2 image is written based on updated
+ * width and height dimensions
  * 
  * Inputs: 
+ * 
+ *      A2 transformed: A transformed A2 with updated pixel layout, width, and
+ *      height
+ * 
+ *      Pnm_ppm source: Original "holder" of image used that the transformed
+ *      image is written to, which is a Pnm_ppm that contains a struct containg 
+ *      width and height dimensions of an A2 called pixels that holds the 
+ *      ppm image.
+ * 
+ *      A2Methods_T method_type: method type (either plain or blocked) that
+ *      will be used to call on applicable functions
  *	    
- * Return: 
+ * Return: none (void)
  *
- * Notes: 
+ * Notes: ?
  * 
  ************************/
 void write_A2(A2 transformed, Pnm_ppm source, A2Methods_T method_type)
@@ -94,13 +116,20 @@ void write_timing(char *timing_filename, double time, int width, int height) {
 
 /********** open_or_fail ********
  *
- * Purpose:
+ * Purpose: Opens a file containing a ppm, if provided
  * 
  * Inputs: 
+ *      char *filename: a string representing image file that A2 will be
+ *      created according to
+ *      char *mode: a string representing the mode that the file will be
+ *      opened/read according to
  *	    
- * Return: 
+ * Return:
+ *      FILE *fp as a pointer to an opened file
  *
  * Notes: 
+ *      asserts that a file pointer (fp) is not null after attempting to
+ *      open the provided file
  * 
  ************************/
 FILE *open_or_fail(char *filename, char *mode)

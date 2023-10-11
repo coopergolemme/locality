@@ -1,13 +1,13 @@
 /**************************************************************
  *
- *                     sudoku.c
+ *                     transformations.c
  *
- *     Assignment: iii
- *     Authors: Liam Smith (lsmith26) and Yoda Ermias (yermia01)
- *     Date: Sep 28, 2023
+ *      Assignment: locality
+ *      Authors: Liam Smith (lsmith26) and Cooper Golemme (UTLN)
+ *      Date: October 10, 2023
  * 
- *     For properly formatted 9 x 9 files, the files are interpreted as
- *     sudoku solutions or not accordng to typical game rules.
+ *      Transformation functions used to rotate an image and map
+ *      accordingly
  *
  *
  **************************************************************/
@@ -23,20 +23,35 @@
 typedef A2Methods_UArray2 A2; 
 static A2Methods_T methods;
 
-
+// should move to .h file?
 void apply_rotate90(int i, int j, A2 array2, void *source, void *dest);
 void apply_rotate180(int i, int j, A2 array2, void *source, void *dest);
 void apply_rotate270(int i, int j, A2 array2, void *source, void *dest);
 
-/********** UArray2b_free ********
+/********** rotate ********
  *
  * Purpose:
+ *      Rotates source image based on degree provided as input, and maps
+ *      rotated image according to default based on method type
  * 
  * Inputs: 
+ *      Pnm_ppm source_ppm: Original "holder" of image used that the transformed
+ *      image is written to, which is a Pnm_ppm that contains a struct containg 
+ *      width and height dimensions of an A2 called pixels that holds the 
+ *      ppm image.
+ * 
+ *      int degree: an integer representing the degree of rotation that
+ *      the image will be transformed according to
+ * 
+ *      A2Methods_T method_type: method type (either plain or blocked) that
+ *      will be used to call applicable functions
+ *      
  *	    
  * Return: 
- *
+ *      An A2 image of pixels that correspond to a rotated image
+ *      
  * Notes: 
+ *      do some asserts
  * 
  ************************/
 A2 rotate(Pnm_ppm source_ppm, int degree, A2Methods_T method_type)
@@ -73,59 +88,94 @@ A2 rotate(Pnm_ppm source_ppm, int degree, A2Methods_T method_type)
         return dest;
 }
 
-/********** UArray2b_free ********
+/********** apply_rotate90 ********
  *
  * Purpose:
+ *      Mapping function for 90 degree counter clockwise rotations
  * 
  * Inputs: 
+ *      int i:
+ * 
+ *      int j: ?
+ * 
+ *      A2 array2: A2 that contains an image
+ * 
+ *      void *source: void pointer to source image
+ * 
+ *      void *dest: void pointer to destination image
  *	    
  * Return: 
  *
  * Notes: 
+ *      change variable names?
  * 
  ************************/
 void apply_rotate90(int i, int j, A2 array2, void *source, void *dest)
 {
         (void) array2;
-        Pnm_rgb dest_unupdated = methods->at(dest, methods->width(dest) - j - 1, i);
+        Pnm_rgb dest_unupdated = methods->at(dest, 
+                                        methods->width(dest) - j - 1, i);
         *dest_unupdated = *(Pnm_rgb)source;
 }
 
-/********** UArray2b_free ********
+/********** apply_rotate180 ********
  *
  * Purpose:
+ *      Mapping function for 180 degree counter clockwise rotations
  * 
  * Inputs: 
+ *      int i:
+ * 
+ *      int j: ?
+ * 
+ *      A2 array2: A2 that contains an image
+ * 
+ *      void *source: void pointer to source image
+ * 
+ *      void *dest: void pointer to destination image
  *	    
  * Return: 
  *
  * Notes: 
+ *      change variable names?
  * 
  ************************/
 void apply_rotate180(int i, int j, A2 array2, void *source, void *dest)
 {
 
         (void) array2;
-        Pnm_rgb dest_unupdated = methods->at(dest, methods->width(dest) - i - 1, 
-                                                methods->height(dest) - j - 1);
+        Pnm_rgb dest_unupdated = methods->at(dest, methods->width(dest) - i - 1,
+                                        methods->height(dest) - j - 1);
         *dest_unupdated = *(Pnm_rgb)source;
 }
 
-/********** UArray2b_free ********
+/********** apply_rotate270 ********
  *
  * Purpose:
+ *      Mapping function for 270 degree counter clockwise rotations
  * 
  * Inputs: 
+ *      int i:
+ * 
+ *      int j: ?
+ * 
+ *      A2 array2: A2 that contains an image
+ * 
+ *      void *source: void pointer to source image
+ * 
+ *      void *dest: void pointer to destination image
  *	    
  * Return: 
  *
  * Notes: 
+ *      change variable names?
  * 
  ************************/
 void apply_rotate270(int i, int j, A2 array2, void *source, void *dest)
 {
         (void) array2;
-        Pnm_rgb dest_unupdated = methods->at(dest, i, methods->width(dest) - j - 1);
+        Pnm_rgb dest_unupdated = methods->at(dest, i, 
+                                        methods->width(dest) - j - 1);
         *dest_unupdated = *(Pnm_rgb)source;
 }
 

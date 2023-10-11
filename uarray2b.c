@@ -1,3 +1,17 @@
+/**************************************************************
+ *
+ *                     UArray2b.c WHY IS THIS STILL CAPIAL??!
+ *
+ *      Assignment: locality
+ *      Authors: Liam Smith (lsmith26) and Cooper Golemme (UTLN)
+ *      Date: October 10, 2023
+ * 
+ *      Creation of a UArray2b as a UArray created two dimensionally,
+ *      partitioned into blocks
+ *
+ *
+ **************************************************************/
+
 #include "uarray2b.h"
 #include "uarray2.h"
 #include <uarray.h>
@@ -53,6 +67,31 @@ struct T {
 //     return 0;
 // }
 
+ /********** UArray2b_new ********
+ *
+ * Purpose:
+ *      Creates a UArray2b according to blocked logic where each block is
+ *      represented as a UArray_T
+ * 
+ * Inputs: 
+ *      int width: an integer representing the horizontal width of a UArray2b
+ * 
+ *      int height: an integer representing the vertical height of a UArray2b
+ * 
+ *      int size: an integer representing the size of an element's bytes that
+ *      will be stored in each block's cells
+ * 
+ *      int blocksize: an integer representing the number of cells on one side
+ *      of a block
+ *	    
+ * Return: 
+ *      A UArray2b_T as type T, which has been initialized with width, height,
+ *      element size, and blocksize properties.
+ *
+ * Notes: 
+ *      asserts?
+ * 
+ ************************/
 T UArray2b_new(int width, int height, int size, int blocksize)
 {
         fprintf(stderr, "NEw with block\n");
@@ -105,15 +144,25 @@ T UArray2b_new(int width, int height, int size, int blocksize)
  * block occupies at most 64KB (if possible)
  */
 
- /********** function name ********
+ /********** UArray2b_new_64K_block ********
  *
  * Purpose:
+ *      Maximum allocator of a UArray2b with "default" 64KB blocksize ?
  * 
  * Inputs: 
+ *      int width: an integer representing the horizontal width of a UArray2b
+ * 
+ *      int height: an integer representing the vertical height of a UArray2b
+ * 
+ *      int size: an integer representing the size of an element's bytes that
+ *      will be stored in each block's cells
  *	    
  * Return: 
+ *      A UArray2b_T as type T, which has been initialized with width, height,
+ *      element size, and blocksize properties.
  *
  * Notes: 
+ *      ?
  * 
  ************************/
 T UArray2b_new_64K_block(int width, int height, int size)
@@ -129,13 +178,18 @@ T UArray2b_new_64K_block(int width, int height, int size)
 
 /********** UArray2b_free ********
  *
- * Purpose:
+ * Purpose: Frees a UArray2b and its contained elements
  * 
  * Inputs: 
+ *      T array2b: a UArray2b_T with width, height, element size and
+ *      blocksize properties as well as a UArray2_T which stores blocked
+ *      elements
  *	    
  * Return: 
+ *      none (void)
  *
  * Notes: 
+ *      asserts that array2b exists before attempting to free
  * 
  ************************/
 void UArray2b_free(T *array2b)
@@ -150,6 +204,23 @@ void UArray2b_free(T *array2b)
         FREE(*array2b);
 }
 
+/********** UArray2b_width ********
+ *
+ * Purpose:
+ *      Calculates the horizontal width of a UArray2b
+ * 
+ * Inputs: 
+ *      T array2b: a UArray2b_T with width, height, element size and
+ *      blocksize properties as well as a UArray2_T which stores blocked
+ *      elements
+ *	    
+ * Return: 
+ *      an integer representing the horizontal width of a UArray2_T
+ *
+ * Notes: 
+ *      asserts that array2b exists before calculating its width
+ * 
+ ************************/
 int UArray2b_width(T array2b)
 {
         assert(array2b);
@@ -159,12 +230,18 @@ int UArray2b_width(T array2b)
 /********** UArray2b_height ********
  *
  * Purpose:
+ *      Calculates the vertical height of a UArray2b
  * 
  * Inputs: 
+ *      T array2b: a UArray2b_T with width, height, element size and
+ *      blocksize properties as well as a UArray2_T which stores blocked
+ *      elements
  *	    
  * Return: 
+ *      an integer representing the vertical height of a UArray2_T
  *
  * Notes: 
+ *      asserts that array2b exists before calculating its height
  * 
  ************************/
 int UArray2b_height(T array2b)
@@ -176,12 +253,19 @@ int UArray2b_height(T array2b)
 /********** UArray2b_size ********
  *
  * Purpose:
+ *      Calculates the size of an element capablle of being
+ *      stored in a cell of a block of a UArray2b
  * 
  * Inputs: 
+ *      T array2b: a UArray2b_T with width, height, element size and
+ *      blocksize properties as well as a UArray2_T which stores blocked
+ *      elements
  *	    
  * Return: 
+ *      an integer representing the element size being stored
  *
  * Notes: 
+ *      asserts that array2b exists before calculating its elements' size
  * 
  ************************/
 int UArray2b_size(T array2b)
@@ -193,12 +277,20 @@ int UArray2b_size(T array2b)
 /********** UArray2b_blocksize ********
  *
  * Purpose:
+ *      Calculates the size of an element capablle of being
+ *      stored in a cell of a block of a UArray2b
  * 
  * Inputs: 
+ *      T array2b: a UArray2b_T with width, height, element size and
+ *      blocksize properties as well as a UArray2_T which stores blocked
+ *      elements
  *	    
  * Return: 
+ *      an integer representing the number of cells on one side
+ *      of a block
  *
  * Notes: 
+ *      asserts that array2b exists before calculating its blocksize
  * 
  ************************/
 int UArray2b_blocksize(T array2b)
@@ -209,11 +301,17 @@ int UArray2b_blocksize(T array2b)
 
 /********** flattened_index ********
  *
- * Purpose:
+ * Purpose: ?
  * 
  * Inputs: 
+ *      int col:
+ * 
+ *      int row:
+ * 
+ *      int width:
  *	    
  * Return: 
+ *      ?
  *
  * Notes: 
  * 
@@ -227,15 +325,29 @@ int flattened_index(int col, int row, int width)
  * index out of range is a checked run-time error
  */
 
-/********** UArray2b_free ********
+/********** Block_at ********
  *
- * Purpose:
+ * Purpose: 
+ *      Used during mapping, the function returns the entire block that
+ *      exists when considering row and column indeces
  * 
  * Inputs: 
+ *      T array2b: a UArray2b_T with width, height, element size and
+ *      blocksize properties as well as a UArray2_T which stores blocked
+ *      elements
+ *      
+ *      int column: an integer representing the column of an element within
+ *      a UArray2b
+ * 
+ *      int row: an integer representing the row of an element within
+ *      a UArray2b
+ *      
  *	    
- * Return: 
+ * Return:
+ *      The block that exists at a given row and column index as a void pointer
  *
  * Notes: 
+ *      asserts ?
  * 
  ************************/
 void *Block_at(T array2b, int column, int row)
@@ -251,15 +363,24 @@ void *Block_at(T array2b, int column, int row)
         return block;
 }
 
-/********** UArray2b_free ********
+/********** UArray2b_at ********
  *
  * Purpose:
+ *      Access the element at a given row and column index of a UArray2b
  * 
  * Inputs: 
+ *      int column: an integer representing the column of an element within
+ *      a UArray2b
+ * 
+ *      int row: an integer representing the row of an element within
+ *      a UArray2b
  *	    
  * Return: 
- *
+ *      the element at a given row and column index of a UArray2b as a void
+ *      pointer
+ * 
  * Notes: 
+ *      asserts ?
  * 
  ************************/
 void *UArray2b_at(T array2b, int column, int row)
@@ -286,12 +407,25 @@ void *UArray2b_at(T array2b, int column, int row)
 /********** UArray2b_map ********
  *
  * Purpose:
+ *      Maps accross a UArray2b according to block major logic. This means that
+ *      every cell of a block will be visited according to row major logic
+ *      before the next block is visited, again, according to row major logic.
  * 
  * Inputs: 
+ *      T array2b: a UArray2b_T with width, height, element size and
+ *      blocksize properties as well as a UArray2_T which stores blocked
+ *      elements
+ * 
+ *      apply: a function which is applied to every element of the UArray2b
+ * 
+ *      void *cl: pointer to a variable needed by the void apply 
+ *      function pointer.
  *	    
  * Return: 
+ *      none (void)
  *
  * Notes: 
+ *      throw in some asserts
  * 
  ************************/
 extern void  UArray2b_map(T array2b, 
@@ -356,7 +490,7 @@ extern void  UArray2b_map(T array2b,
 
 /********** check_and_print ********
  *
- * Purpose:
+ * Purpose: keep?
  * 
  * Inputs: 
  *	    
@@ -379,7 +513,7 @@ void check_and_print(int col, int row, UArray2b_T a, void *elem, void *cl)
 
 /********** fill_test ********
  *
- * Purpose:
+ * Purpose: keep?
  * 
  * Inputs: 
  *	    
