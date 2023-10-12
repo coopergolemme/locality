@@ -1,0 +1,79 @@
+90 row 3.5 scale from-wind-cave.jpg
+Total Time: 545386354.000000
+Time per pixel: 119.127641
+
+180 row 3.5 scale from-wind-cave.jpg
+Total Time: 427119477.000000
+Time per pixel: 93.294846
+
+0 row 3.5 scale from-wind-cave.jpg
+Total Time: 211637366.000000
+Time per pixel: 46.227523
+
+90 col 3.5 scale from-wind-cave.jpg
+Total Time: 774509370.000000
+Time per pixel: 169.174519
+
+180 col 3.5 scale from-wind-cave.jpg
+Total Time: 1012335559.000000
+Time per pixel: 221.122414
+
+0 col 3.5 scale from-wind-cave.jpg
+Total Time: 386628954.000000
+Time per pixel: 84.450582
+
+90 block 3.5 scale from-wind-cave.jpg
+Total Time: 815302026.000000
+Time per pixel: 178.084777
+
+180 block 3.5 scale from-wind-cave.jpg
+Total Time: 824440263.000000
+Time per pixel: 180.080823
+
+0 block 3.5 scale from-wind-cave.jpg
+Total Time: 424096476.000000
+Time per pixel: 92.634538
+
+Dimensions: 2856 1603
+
+
+
+
+pnmscale 1 rotate 90 -row-major
+Total Time: 39623757.000000
+Time per pixel: 106.022982
+
+pnmscale 1 rotate 180 -row-major
+otal Time: 38128885.000000
+Time per pixel: 102.023089
+
+pnmscale 1 rotate 0 -row-major
+Total Time: 19120516.000000
+Time per pixel: 51.161583
+
+pnmscale 1 rotate 90 -col-major
+Total Time: 53923500.000000
+Time per pixel: 144.285416
+
+pnmscale 1 rotate 180 -col-major
+Total Time: 63302397.000000
+Time per pixel: 169.380932
+
+pnmscale 1 rotate 0 -col-major
+Total Time: 28004742.000000
+Time per pixel: 74.933486
+
+pnmscale 1 rotate 90 -block-major
+Total Time: 70303997.000000
+Time per pixel: 188.115413
+
+pnmscale 1 rotate 180 -block-major
+Total Time: 70265754.000000
+Time per pixel: 188.013084
+
+pnmscale 1 rotate 0 -block-major
+Total Time: 36414505.000000
+Time per pixel: 97.435849
+
+Dimensions:
+816 458

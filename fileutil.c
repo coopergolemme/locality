@@ -41,13 +41,17 @@ static A2Methods_T methods;
  *      A Pnm_ppm that contains a struct containg width and height
  *      dimensions of an A2 called pixels that holds the ppm image
  *
- * Notes: ?
+ * Notes: 
+ *      If file is not provided, input is taken through stdin
  * 
  ************************/
 Pnm_ppm make_A2(char *filename, A2Methods_T method_type)
 {
+        /* if filename is null, read through stdin, otherwise read fp becomes
+        a pointer to filename */
         FILE *fp = (filename == NULL) ? stdin : open_or_fail(filename, "rb");
 
+        /* data created after file is read and mapped according to method */
         Pnm_ppm data = Pnm_ppmread(fp, method_type);
         fclose(fp);
 
@@ -74,24 +78,58 @@ Pnm_ppm make_A2(char *filename, A2Methods_T method_type)
  *	    
  * Return: none (void)
  *
- * Notes: ?
+ * Notes: 
+ *      Image is written according to Pnm_ppmwrite from pnm.h
  * 
  ************************/
 void write_A2(A2 transformed, Pnm_ppm source, A2Methods_T method_type)
 {
+        /* updating of pixels, width, and height dimensions based
+        on transformed properties */
         methods = method_type;
         source->pixels = transformed;
         source->width = methods->width(transformed);
         source->height =  methods->height(transformed);
+
+        /* image written to stdout in source Pnm_ppm */
         Pnm_ppmwrite(stdout, source);
 }
 
-void write_timing(char *timing_filename, double time, int width, int height) {
+
+/********** write_timing ********
+ *
+ * Purpose:
+ *      Writes timing information based on CPU and rotation information 
+ *      to a file
+ * 
+ * Inputs: 
+ * 
+ *      char *timing_filename: time filename provided for writing to
+ * 
+ *      double time: time value printed to output file
+ * 
+ *      int width: voided parameter
+ *
+ *      int height: voided parameter
+ *	    
+ * Return: 
+ *      none (void)
+ *
+ * Notes: 
+ *      open_or_fail will assert to ensure that provided file exists and is
+ *      not NULL
+ * 
+ ************************/
+void write_timing(char *timing_filename, double time, int width, int height)
+{
         (void)width;
         (void)height;
+
+        /* file pointer tf created based on open_or_fail return */
         FILE *tf = open_or_fail(timing_filename, "w");
         fprintf(tf, "Total Time: %f\n", time);
         fprintf(tf, "Time per pixel: %f\n", time / (width * height));
+        fclose(tf);
 
 }
 
@@ -102,6 +140,7 @@ void write_timing(char *timing_filename, double time, int width, int height) {
  * Inputs: 
  *      char *filename: a string representing image file that A2 will be
  *      created according to
+ *
  *      char *mode: a string representing the mode that the file will be
  *      opened/read according to
  *	    
@@ -119,6 +158,3 @@ FILE *open_or_fail(char *filename, char *mode)
         assert(fp != NULL);
         return fp;
 }
-
-
-

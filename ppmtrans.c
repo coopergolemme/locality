@@ -44,9 +44,10 @@ typedef struct Dimensions{
         int height;
 } Dimensions;
 
-Dimensions open_and_rotate(char *filename, int rotation, A2Methods_T method_type);
-void timer_write(char *timing_file, double time);
-void open_and_rotate_timed(char *image_filename, int rotation, A2Methods_T method_type, char *timing_filename);
+Dimensions open_and_rotate(char *filename, int rotation, 
+                        A2Methods_T method_type);
+void open_and_rotate_timed(char *image_filename, int rotation, 
+                        A2Methods_T method_type, char *timing_filename);
 
 static void
 usage(const char *progname)
@@ -65,7 +66,6 @@ int main(int argc, char *argv[])
         int   rotation       = 0;
         char *input_filename;
         int   i;
-        // int ir;
 
         /* default to UArray2 methods */
         A2Methods_T methods = uarray2_methods_plain; 
@@ -84,7 +84,6 @@ int main(int argc, char *argv[])
 
                         methods->map_default = methods->map_col_major;
                 } else if (strcmp(argv[i], "-block-major") == 0) {
-                        fprintf(stderr, "blockmajor\n");
                         SET_METHODS(uarray2_methods_blocked, map_block_major,
                                     "block-major");
 
@@ -107,6 +106,14 @@ int main(int argc, char *argv[])
 
                 } else if (strcmp(argv[i], "-time") == 0) {
                         time_file_name = argv[++i];
+                } else if (strcmp(argv[i], "-transpose") == 0) {
+                                fprintf(stderr,
+                                        "Not implemented: -transpose\n");
+                                return EXIT_FAILURE;
+                } else if (strcmp(argv[i], "-flip") == 0) {
+                                fprintf(stderr,
+                                        "Not implemented: -flip\n");
+                                return EXIT_FAILURE;
                 } else if (*argv[i] == '-') {
                         fprintf(stderr, "%s: unknown option '%s'\n", argv[0],
                                 argv[i]);
@@ -118,40 +125,73 @@ int main(int argc, char *argv[])
                         break;
                 }
         }
-        
+        if (rotation == 270) {
+                fprintf(stderr, "Not implemented: -rotate 270\n");
+                return EXIT_FAILURE;
+        }
+
+        /* input filename is set to command line value at ith index */
         input_filename = argv[i];
         
-        if(time_file_name == NULL) {
+
+        /* if timing file not provided, regular open and rotate called*/
+        if (time_file_name == NULL) {
                 open_and_rotate(input_filename, rotation, methods);
         }
 
+        /* timing file provided */
         else {
                 open_and_rotate_timed(input_filename,
                                       rotation, 
                                       methods, 
                                       time_file_name);
         }
+        return EXIT_SUCCESS;
+
 }
 
-void timer_write(char *timing_file, double time){
-        (void)timing_file;
-        (void)time;
-        return;
-}
+/********** open_and_rotate_timed ********
+ *
+ *      Opens and rotates an image and prints CPU and rotation information
+ *      to timing file
+ * 
+ * Inputs: 
+ *      char *image_filename: a string representing image file that A2 will be
+ *      created according to
+ * 
+ *      int rotation: an integer representing the degree of rotation that
+ *      the image will be transformed according to
+ * 
+ *      A2Methods_T method_type: method type (either plain or blocked) that
+ *      will be used to call applicable functions
 
+ *      char *image_filename: a string representing image file that timing
+ *      information will be written to
+ *	    
+ * Return: 
+ *      none (void)
+ *
+ * Notes: ?
+ * 
+ ************************/
 void open_and_rotate_timed(char *image_filename, 
                            int rotation,
                            A2Methods_T method_type,
                            char *timing_filename)
 {
+        /* creation of timer */
         CPUTime_T timer = CPUTime_New();
         CPUTime_Start(timer);
 
-        Dimensions dims = open_and_rotate(image_filename, rotation, method_type);
+        /* Dimension struct created with width and height dimeensions */
+        Dimensions dims = open_and_rotate(image_filename, 
+                                                rotation, method_type);
 
+        /* time calculated when timer stops, written to file */
         double time = CPUTime_Stop(timer);
         write_timing(timing_filename, time, dims.width, dims.height);
 
+        /* freeing the timer instance */
         CPUTime_Free(&timer);
 }
 
@@ -173,28 +213,39 @@ void open_and_rotate_timed(char *image_filename,
  *      will be used to call applicable functions
  *	    
  * Return: 
- *      none (void)
+ *      Dimension struct with width and height elements
  *
- * Notes: What will happen if no input file is provided? Not called, right?
- *      Just want to confirm
+ * Notes:
+ *      Asserts that source_ppm exists before operations are called on it
  * 
  ************************/
-Dimensions open_and_rotate(char *filename, int rotation, A2Methods_T method_type)
+Dimensions open_and_rotate(char *filename, int rotation, 
+                                        A2Methods_T method_type)
 {
+        /* methods received method_type */
         A2Methods_T methods = method_type;
 
+        /* source_ppm created based on file and mapped according to
+        method type */
         Pnm_ppm source_ppm = make_A2(filename, methods);
+        assert(source_ppm);
         
+        /* source_pix created as an A2 based on pixels */
         A2 source_pix = source_ppm->pixels;
 
+        /* dims created as a struct containng width and height dimensions */
         Dimensions dims;
         dims.height = methods->height(source_pix);
         dims.width = methods->width(source_pix);
 
+        /* transformed A2 is rotated according to degree */
         A2 transformed = rotate(source_ppm, rotation, methods);
         write_A2(transformed, source_ppm, methods);
         
+        /* if default or 0 rotation, source_pix is freed */
         if (rotation != 0) methods->free(&source_pix);
+
+        /* if rotation not zero, source_ppm freed */
         Pnm_ppmfree(&source_ppm);
         return dims;
 }

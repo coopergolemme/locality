@@ -3,18 +3,94 @@ locality README
 Authors: Liam Smith (lsmith26) Cooper Golemme (cgolem01)
 
 Help received:
-    None
+Stack overflow for valgrind errors
 
 Correctly impelemented:
-    All parts
+All parts
 
-Architecture of solutions
+|--------------------------|
+|Architecture of solutions:|
+|--------------------------|
+Our solution comprises multiple parts that work together to rotate an image.
 
+We first have the fileutil which is a C program that handles all the output
+and input that our PPMtrrans program will need. Inside the util, there is a
+function to open an image from a file and populate a UArray2 type to send to
+PPMtrans. There is also a function that writes to standard output the output
+of the ppmtrans program.
 
-Part E
+Inside our ppmtrans we call these functions to create an A2 based on the
+method type that the user selects. The user can either select blocked major
+or row or column major this will either create a UArray2b or UArray2
+respectively.
 
-Table
+UArray2b represents the pixel data for the image in a blocked way which
+preserves spatial locality for the rotation of the images. The basic
+architecture for the UArray2b is that it is a struct that contains a width,
+height, blocksize, size, and a UArray2. Size is the size of an element that
+the user wants to store, blocksize is the number of blocks the user wants to
+break this 2d array into, and height and width are the dimensions of the 2d
+array. The UArray2 in the struct has dimensions height / blocksize and
+width / blocksize. Each element in the UArray2 is a Uarray_T with a length
+of (blocksize)(blocksize). This way, each block is located spatially close
+together which improves CPU time as the cache can work more efficiently when
+rotating the image.
 
-Patterns
+UArray2 is a standard UArray where elements are not necessarily spatially
+local.
+
+After the program makes one of these two options, it performs rotations
+based on the ones provided on the command line. The rotation logic is fairly
+simple and is given in the spec of this assignment. Basically, the program
+creates a new A2 type (either blocked or not) and copies the entries from
+the source image A2 to the destination image A2 in a way that rotates it the
+given amount.
+
+After rotating, the destination image A2 is passed back through the fileutil
+to a function that writes to standard output the rotated image.
+
+---
+
+## Part E
 
 Time spent: 25 hours
+
+Image 1: from-wind-cave.jpg (3.5 scale)
+Size (2856 x 1603):
+
+Degree // Map type // CPU Time // Time/input pixel // Instructions/input pixel
+0 // Row // 211637366.000000 // 46.227523 // 46227523000
+0 // Column // 386628954.000000 // 84.450582 // 84450582000
+0 // Block // 424096476.000000 // 92.634538 // 92634538000
+90 // Row // 545386354.000000 // 119.127641 // 119127641000
+90 // Column // 774509370.000000 // 169.174519 // 169174519000
+90 // Block 815302026.000000 // 178.084777 // 178084777000
+180 // Row 427119477.000000 // 93.294846 // 93294846000
+180 // Column 1012335559.000000 // 221.122414 // 221122414000
+180 // Block 824440263.000000 // 180.080823 // 180080823000
+
+Image 2: from-wind-cave.jpg (1.0 scale)
+Size (816 x 458):
+
+Degree // Map type // CPU Time // Time/input pixel // Instructions/input pixel
+0 // Row // 19120516.000000 // 51.161583 // 51161583000
+0 // Column // 28004742.000000 // 74.933486 // 74933486000
+0 // Block // 36414505.000000 // 97.435849 // 97435849000
+90 // Row // 39623757.000000 // 106.022982 // 106022982000
+90 // Column // 53923500.000000 // 144.285416 // 144285416000
+90 // Block // 70303997.000000 // 188.115413 // 188115413000
+180 // Row // 38128885.000000 // 102.023089 // 102023089000
+180 // Columm // 63302397.000000 // 169.380932 // 169380932000
+180 // Block // 70265754.000000 // 188.013084 // 188013084000
+
+Name and model of computer - Intel(R) Xeon(R) Silver 4214Y CPU @ 2.20GHz
+
+Patterns
+Do certain rotations run faster when using blocked arrays vs plain?
+Rotations with blocked arrays run slower than rotations with plain arrays.
+Within plain arrays, for the same degree of rotation, row major mapping is
+always faster than column major mapping. So overall, 
+
+Within plain, discuss the difference in row versus column.
+
+If you try different sized images, is the number of pixels per similar regardless of image size?
