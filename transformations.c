@@ -122,7 +122,8 @@ void apply_rotate90(int col, int row, A2 array2, void *source, void *dest)
 
         /* dest_unupdated is a pixel coming from a source image */
         Pnm_rgb dest_unupdated = methods->at(dest, 
-                                        methods->width(dest) - row - 1, col);
+                                             methods->width(dest) - row - 1, 
+                                             col);
         assert(dest_unupdated);
 
         /* dest_unupdated gets becomes the source pixel location */
@@ -159,8 +160,8 @@ void apply_rotate180(int col, int row, A2 array2, void *source, void *dest)
 
         /* dest_unupdated is a pixel coming from a source image */
         Pnm_rgb dest_unupdated = methods->at(dest, 
-                                        methods->width(dest) - col - 1,
-                                        methods->height(dest) - row - 1);
+                                             methods->width(dest) - col - 1,
+                                             methods->height(dest) - row - 1);
         assert(dest_unupdated);
 
         /* dest_unupdated gets becomes the source pixel location */

@@ -104,7 +104,7 @@ T UArray2b_new(int width, int height, int size, int blocksize)
  /********** UArray2b_new_64K_block ********
  *
  * Purpose:
- *      Maximum allocator of a UArray2b with "default" 64KB blocksize ?
+ *      Maximum allocator of a UArray2b with "default" 64KB blocksize
  * 
  * Inputs: 
  *      int width: an integer representing the horizontal width of a UArray2b

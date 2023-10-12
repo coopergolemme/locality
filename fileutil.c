@@ -16,7 +16,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <mem.h>
 
 #include "assert.h"
 #include "fileutil.h"
@@ -108,9 +107,9 @@ void write_A2(A2 transformed, Pnm_ppm source, A2Methods_T method_type)
  * 
  *      double time: time value printed to output file
  * 
- *      int width: voided parameter
+ *      int width: integer representing an image's width
  *
- *      int height: voided parameter
+ *      int height: integer representing an image's height
  *	    
  * Return: 
  *      none (void)
@@ -118,19 +117,16 @@ void write_A2(A2 transformed, Pnm_ppm source, A2Methods_T method_type)
  * Notes: 
  *      open_or_fail will assert to ensure that provided file exists and is
  *      not NULL
+ *      Makes the file with timing_filename if file does not exist
  * 
  ************************/
 void write_timing(char *timing_filename, double time, int width, int height)
-{
-        (void)width;
-        (void)height;
-
+{ 
         /* file pointer tf created based on open_or_fail return */
         FILE *tf = open_or_fail(timing_filename, "w");
         fprintf(tf, "Total Time: %f\n", time);
         fprintf(tf, "Time per pixel: %f\n", time / (width * height));
         fclose(tf);
-
 }
 
 /********** open_or_fail ********
@@ -150,11 +146,18 @@ void write_timing(char *timing_filename, double time, int width, int height)
  * Notes: 
  *      asserts that a file pointer (fp) is not null after attempting to
  *      open the provided file
+ *      if file cannot be opened, exit through EXIT FAILURE
  * 
  ************************/
 FILE *open_or_fail(char *filename, char *mode)
 {
         FILE *fp = fopen(filename, mode);
-        assert(fp != NULL);
+
+        /* checks if file can be opened */
+        if (fp == NULL){
+                fprintf(stderr, "File: %s could not be opened\n", filename);
+                exit(EXIT_FAILURE);
+        }
+        
         return fp;
 }

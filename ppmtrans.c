@@ -17,13 +17,11 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
-#include <time.h>
 
 #include "assert.h"
 #include "fileutil.h"
 #include "transformations.h"
 #include "cputiming.h"
-#include "cputiming_impl.h"
 
 
 
@@ -171,7 +169,8 @@ int main(int argc, char *argv[])
  * Return: 
  *      none (void)
  *
- * Notes: ?
+ * Notes: 
+ *      calls functions from CPUTime file
  * 
  ************************/
 void open_and_rotate_timed(char *image_filename, 

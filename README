@@ -1,16 +1,24 @@
-locality README
+|-----------------------------------------------------------------------------|
+|   locality README
+|
+|   Authors: Liam Smith (lsmith26) Cooper Golemme (cgolem01)
+|
+|
+|
+|-----------------------------------------------------------------------------|
 
-Authors: Liam Smith (lsmith26) Cooper Golemme (cgolem01)
+
 
 Help received:
-Stack overflow for valgrind errors
+    Stack overflow for valgrind errors
 
 Correctly impelemented:
-All parts
+    All required parts
 
 |--------------------------|
 |Architecture of solutions:|
 |--------------------------|
+
 Our solution comprises multiple parts that work together to rotate an image.
 
 We first have the fileutil which is a C program that handles all the output
@@ -51,9 +59,13 @@ to a function that writes to standard output the rotated image.
 
 ---
 
-## Part E
 
 Time spent: 25 hours
+
+
+|--------------------------|
+|    Part E measurements:  |
+|--------------------------|
 
 Image 1: from-wind-cave.jpg (3.5 scale)
 Size (2856 x 1603):
@@ -86,11 +98,20 @@ Degree // Map type // CPU Time // Time/input pixel // Instructions/input pixel
 Name and model of computer - Intel(R) Xeon(R) Silver 4214Y CPU @ 2.20GHz
 
 Patterns
-Do certain rotations run faster when using blocked arrays vs plain?
+
+
 Rotations with blocked arrays run slower than rotations with plain arrays.
 Within plain arrays, for the same degree of rotation, row major mapping is
-always faster than column major mapping. So overall, 
+always faster than column major mapping. So overall, with the same rotation,
+from slowest to fastest time/input would be block major, column major, then row
+major.
 
-Within plain, discuss the difference in row versus column.
+GENERALLY, for a 0 degree rotation, slowest to fastest ranks from row to column
+to blocked. For a 90 degree rotation, slowest to fastest ranks from row to
+column to blocked. For a 180 degree rotation, slowest to fastest ranks from row
+to column to blocked. BUT there is one instance (180 degree rotation on 3.5)
+ranked from row to blocked to column.
 
-If you try different sized images, is the number of pixels per similar regardless of image size?
+For a larger image, the number of pixels per was not consisent based on image
+size. In some cases, the number of pixels per was higher for the smaller image
+while occasionally the number was higher for a larger image.
