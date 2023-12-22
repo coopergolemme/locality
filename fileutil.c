@@ -74,7 +74,7 @@ Pnm_ppm make_A2(char *filename, A2Methods_T method_type)
  * 
  *      A2Methods_T method_type: method type (either plain or blocked) that
  *      will be used to call on applicable functions
- *	    
+ *          
  * Return: none (void)
  *
  * Notes: 
@@ -110,7 +110,7 @@ void write_A2(A2 transformed, Pnm_ppm source, A2Methods_T method_type)
  *      int width: integer representing an image's width
  *
  *      int height: integer representing an image's height
- *	    
+ *          
  * Return: 
  *      none (void)
  *
@@ -139,7 +139,7 @@ void write_timing(char *timing_filename, double time, int width, int height)
  *
  *      char *mode: a string representing the mode that the file will be
  *      opened/read according to
- *	    
+ *          
  * Return:
  *      FILE *fp as a pointer to an opened file
  *

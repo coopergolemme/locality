@@ -165,7 +165,7 @@ int main(int argc, char *argv[])
 
  *      char *image_filename: a string representing image file that timing
  *      information will be written to
- *	    
+ *          
  * Return: 
  *      none (void)
  *
@@ -210,7 +210,7 @@ void open_and_rotate_timed(char *image_filename,
  * 
  *      A2Methods_T method_type: method type (either plain or blocked) that
  *      will be used to call applicable functions
- *	    
+ *          
  * Return: 
  *      Dimension struct with width and height elements
  *

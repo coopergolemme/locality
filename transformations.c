@@ -45,7 +45,7 @@ void apply_rotate180(int col, int row, A2 array2, void *source, void *dest);
  *      A2Methods_T method_type: method type (either plain or blocked) that
  *      will be used to call applicable functions
  *      
- *	    
+ *          
  * Return: 
  *      An A2 image of pixels that correspond to a rotated image, or 
  *      NULL if degree input is invalid
@@ -108,7 +108,7 @@ A2 rotate(Pnm_ppm source_ppm, int degree, A2Methods_T method_type)
  *      void *source: void pointer to source image
  * 
  *      void *dest: void pointer to destination image
- *	    
+ *          
  * Return: 
  *      none (void)
  *
@@ -145,7 +145,7 @@ void apply_rotate90(int col, int row, A2 array2, void *source, void *dest)
  *      void *source: void pointer to source image
  * 
  *      void *dest: void pointer to destination image
- *	    
+ *          
  * Return: 
  *      none (void)
  *

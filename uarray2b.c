@@ -48,7 +48,7 @@ struct T {
  * 
  *      int blocksize: an integer representing the number of cells on one side
  *      of a block
- *	    
+ *          
  * Return: 
  *      A UArray2b_T as type T, which has been initialized with width, height,
  *      element size, and blocksize properties.
@@ -113,7 +113,7 @@ T UArray2b_new(int width, int height, int size, int blocksize)
  * 
  *      int size: an integer representing the size of an element's bytes that
  *      will be stored in each block's cells
- *	    
+ *          
  * Return: 
  *      A UArray2b_T as type T, which has been initialized with width, height,
  *      element size, and blocksize properties.
@@ -145,7 +145,7 @@ T UArray2b_new_64K_block(int width, int height, int size)
  *      T array2b: a UArray2b_T with width, height, element size and
  *      blocksize properties as well as a UArray2_T which stores blocked
  *      elements
- *	    
+ *          
  * Return: 
  *      none (void)
  *
@@ -176,7 +176,7 @@ void UArray2b_free(T *array2b)
  *      T array2b: a UArray2b_T with width, height, element size and
  *      blocksize properties as well as a UArray2_T which stores blocked
  *      elements
- *	    
+ *          
  * Return: 
  *      an integer representing the horizontal width of a UArray2_T
  *
@@ -199,7 +199,7 @@ int UArray2b_width(T array2b)
  *      T array2b: a UArray2b_T with width, height, element size and
  *      blocksize properties as well as a UArray2_T which stores blocked
  *      elements
- *	    
+ *          
  * Return: 
  *      an integer representing the vertical height of a UArray2_T
  *
@@ -223,7 +223,7 @@ int UArray2b_height(T array2b)
  *      T array2b: a UArray2b_T with width, height, element size and
  *      blocksize properties as well as a UArray2_T which stores blocked
  *      elements
- *	    
+ *          
  * Return: 
  *      an integer representing the element size being stored
  *
@@ -247,7 +247,7 @@ int UArray2b_size(T array2b)
  *      T array2b: a UArray2b_T with width, height, element size and
  *      blocksize properties as well as a UArray2_T which stores blocked
  *      elements
- *	    
+ *          
  * Return: 
  *      an integer representing the number of cells on one side
  *      of a block
@@ -274,7 +274,7 @@ int UArray2b_blocksize(T array2b)
  *      int row: row of desired index
  * 
  *      int width: width of the 2d array
- *	    
+ *          
  * Return: 
  *      int for index of the element in the 1d array that corresponds to
  *      the index of the element in a corresponding 2d array
@@ -303,7 +303,7 @@ int flattened_index(int col, int row, int width)
  *      int row: an integer representing the row of an element within
  *      a UArray2b
  *      
- *	    
+ *          
  * Return:
  *      The block that exists at a given row and column index as a void pointer
  *
@@ -338,7 +338,7 @@ void *Block_at(T array2b, int column, int row)
  * 
  *      int row: an integer representing the row of an element within
  *      a UArray2b
- *	    
+ *          
  * Return: 
  *      the element at a given row and column index of a UArray2b as a void
  *      pointer
@@ -386,7 +386,7 @@ void *UArray2b_at(T array2b, int column, int row)
  * 
  *      void *cl: pointer to a variable needed by the void apply 
  *      function pointer.
- *	    
+ *          
  * Return: 
  *      none (void)
  *
